@@ -6,7 +6,7 @@ config.framework = 'ND' -- ND, QB, ESX, or none
 config.EnableDV = true -- true/false. Enable or disable the delete vehicle command.
 config.EnableDAV = true -- true/false. Enable or disable the delete all vehicles command.
 
-config.DVCommand = 'dv' -- The delete vehicle command without the slash. Default: dv 
+config.DVCommand = 'dv' -- The delete vehicle command without the slash. Default: dv
 config.DAVCommand = 'delallveh' -- the delete all vehicle command without the slash. Default: delallveh
 
 config.DVRestricted = false -- true/false. Weather or not the delete vehicle command should be restricted to any group with the permission command.Name

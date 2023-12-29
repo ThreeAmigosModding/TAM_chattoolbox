@@ -6,7 +6,7 @@ if config.EnableFilter then
 
       if not blacklistMsg then
         TriggerClientEvent('chatMessage', -1, name, { 255, 255, 255 }, message)
-      else 
+      else
         TriggerClientEvent('chatMessage', -1, string.format(config.FilterMessage, msg))
         discordWebhook(src, msg)
       end
@@ -16,14 +16,14 @@ if config.EnableFilter then
       local blacklist = false
       local word = nil
 
-      for word in ipairs(config.words) do
-          if string.match(string.lower(str), config.words[word]) then
+      for word in ipairs(config.filteredWords) do
+          if string.match(string.lower(str), config.filteredWords[word]) then
             blacklist = true
-            word = config.words[word]
-          else 
+            word = config.filteredWords[word]
+          else
               if blacklist == true then
                 blacklist = true
-              else 
+              else
                 blacklist = false
               end
           end

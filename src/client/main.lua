@@ -1,21 +1,21 @@
 local oxLib = GetResourceState("ox_lib")
 local name = nil
 
-if config.framework = 'ND' then
+if config.framework == 'ND' then
     local NDCore = exports["ND_Core"]:GetCoreObject()
     local char = NDCore.Functions.GetSelectedCharacter()
 
-    if char then 
+    if char then
         name = chracter.firstName .. " " .. character.lastName
     else
         print('no character')
     end
-elseif config.framework = 'QB' then
+elseif config.framework == 'QB' then
     local QBCore = exports['qb-core']:GetCoreObject()
     local Player = QBCore.Functions.GetPlayerData()
     print(Player.CharInfo)
-elseif config.framework = 'ESX' then
-    
+elseif config.framework == 'ESX' then
+
 else
     name = GetPlayerName(PlayerPedId())
 end
@@ -23,7 +23,7 @@ end
 
 -- register commands
 if config.enableMe then
-    RegisterCommand(config.MeCommand, function(source, args, rawCommand) 
+    RegisterCommand(config.MeCommand, function(source, args, rawCommand)
         if config.MeLocation == 'head' or config.MeLocation == 'both' then
             local text = "* " .. table.concat(args, " ") .. " *"
             local ply = pedId()
@@ -34,17 +34,17 @@ if config.enableMe then
             end
 
             TriggerClientEvent("tam:toolBox:sendProximityMeMessage", -1, source, name, table.concat(args, " "))
-        elseif config.MeLocation == 'chat' or config.MeLocation == 'both'
+        elseif config.MeLocation == 'chat' or config.MeLocation == 'both' then
             local name = GetPlayerName(source)
             TriggerClientEvent("tam:toolBox:sendProximityMeMessage", -1, source, name, table.concat(args, " "))
         else
             Citizen.Trace('You have an error in your tam_chattoolbox config.')
         end
-    end)
+    end, false)
 end
 
-if config.enableMer then 
-    RegisterCommand(config.MerCommand, function(source, args, rawCommand) 
+if config.enableMer then
+    RegisterCommand(config.MerCommand, function(source, args, rawCommand)
         if config.MerLocation == 'head' or config.MerLocation == 'both' then
             local text = "* ^8" .. table.concat(args, " ") .. " *"
             local ply = pedId()
@@ -55,27 +55,29 @@ if config.enableMer then
             end
 
             TriggerClientEvent("tam:toolBox:sendProximityMeMessage", -1, source, name, '^8' .. table.concat(args, " "))
-        elseif config.MerLocation == 'chat' or config.MerLocation == 'both'
+        elseif config.MerLocation == 'chat' or config.MerLocation == 'both' then
             local name = GetPlayerName(PlayerPedId())
             TriggerClientEvent("tam:toolBox:sendProximityMeMessage", -1, source, name, '^8' .. table.concat(args, " "))
         else
             Citizen.Trace('You have an error in your tam_chattoolbox config.')
         end
-    end)
+    end, false)
 end
 
-if config.enableDV then 
+if config.enableDV then
     RegisterCommand(config.DVCommand, function()
         TriggerEvent("tam:chatToolbox:deleteVehicle")
     end, config.DVRestricted)
 
     TriggerEvent("chat:addSuggestion", config.DVCommand, "Deletes the vehicle you're sat in, or standing next to.")
 end
-RegisterCommand(config.DVACommand, function(source, args, rawCommand) 
-    TriggerClientEvent("tam:chatToolbox:delallveh", -1) 
+
+RegisterCommand(config.DAVCommand, function(source, args, rawCommand)
+    TriggerClientEvent("tam:chatToolbox:delallveh", -1)
 end, config.DAVRestricted)
+
 -- events
-RegisterNetEvent('tam:toolBox:sendProximityMeMessage', function(id, name, msg) 
+RegisterNetEvent('tam:toolBox:sendProximityMeMessage', function(id, name, msg)
     local pedId = PlayerId()
     local srvId = GetPlayerFromServerId(id)
     if pedId == srvId then
@@ -85,7 +87,7 @@ RegisterNetEvent('tam:toolBox:sendProximityMeMessage', function(id, name, msg)
     end
 end)
 
-RegisterNetEvent('tam:toolBox:sendProximityDoMessage', function(id, name, msg) 
+RegisterNetEvent('tam:toolBox:sendProximityDoMessage', function(id, name, msg)
     local pedId = PlayerId()
     local srvId = GetPlayerFromServerId(id)
     if pedId == srvId then
@@ -95,7 +97,7 @@ RegisterNetEvent('tam:toolBox:sendProximityDoMessage', function(id, name, msg)
     end
 end)
 
-RegisterNetEvent("tam:chatToolbox:deleteVehicle" function()
+RegisterNetEvent("tam:chatToolbox:deleteVehicle", function()
     local ped = PlayerPedId()
 
     if (DoesEntityExist(ped) and not IsEntityDead(ped)) then
@@ -110,10 +112,10 @@ RegisterNetEvent("tam:chatToolbox:deleteVehicle" function()
                 else
                     Notify('~r~You must be in the driver\'s seat!')
                 end
-                
+
             end
-        else
             local inFrontOfPlayer = GetOffsetFromEntityInWorldCoords(ped, 0.0, distanceToCheck, 0.0)
+        else
             local veh = GetVehicleInDirection(ped, pos, inFrontOfPlayer)
             if (DoesEntityExist(veh)) then
                 DeleteGivenVehicle(veh, numRetries)
@@ -128,11 +130,11 @@ RegisterNetEvent("tam:chatToolbox:deleteVehicle" function()
     end
 end)
 
-RegisterNetEvent("tam:chatToolbox:delallveh" function ()
+RegisterNetEvent("tam:chatToolbox:delallveh", function ()
     for veh in EnumerateVehicles() do
-        if (not IsPedAPlayer(GetPedInVehicleSeat(veh, -1))) then 
-            SetVehicleHasBeenOwnedByPlayer(veh, false) 
-            SetEntityAsMissionEntity(veh, false, false) 
+        if (not IsPedAPlayer(GetPedInVehicleSeat(veh, -1))) then
+            SetVehicleHasBeenOwnedByPlayer(veh, false)
+            SetEntityAsMissionEntity(veh, false, false)
             DeleteVehicle(veh)
             if (DoesEntityExist(veh)) then
                 DeleteVehicle(veh)
@@ -169,7 +171,7 @@ function DeleteGivenVehicle(veh, tMax)
                 else
                     Notify('Vehicle Deleted!')
                 end
-                
+
             end
             timeout = timeout + 1
             Wait(500)
@@ -277,16 +279,16 @@ local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
         disposeFunc(iter)
         return
     end
-    
+
     local enum = {handle = iter, destructor = disposeFunc}
     setmetatable(enum, entityEnumerator)
-    
+
     local next = true
     repeat
         coroutine.yield(id)
         next, id = moveFunc(iter)
     until not next
-    
+
     enum.destructor, enum.handle = nil, nil
     disposeFunc(iter)
     end)
