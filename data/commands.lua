@@ -172,4 +172,4 @@ commands["players"] = { -- command name
     prefix = "[SYSTEM]: " -- prefix to ammend to the message
 }
 
-message commands
+return commands
