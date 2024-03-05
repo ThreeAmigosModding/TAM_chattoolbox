@@ -109,7 +109,7 @@ commands["dw"] = { -- command name
     enabled = true, -- enable or disable the command
     global = true, -- Set to false to only show to nearbly players
     description = "Send a message on the dark web.", -- command description
-    groups = false -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
+    groups = false, -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
     params = {
         {
             name = "args", -- parameter name
@@ -130,7 +130,7 @@ commands["clear"] = { -- command name
 
 commands["announce"] = { -- command name
     enabled = true, -- enable or disable the command
-    global = true
+    global = true,
     description = "Send an announcement in chat", -- command description
     groups = {"admin"}, -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
     params = {

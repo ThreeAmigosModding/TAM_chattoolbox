@@ -2,12 +2,12 @@
 ----       For Support - discord.gg/threeamigos       ----
 ---- Do not edit if you do not know what you're doing ----
 --]]------------------------------------------------------
-fx_version   "cerulean"
+fx_version "cerulean"
 use_experimental_fxv2_oal "yes"
-lua54        "yes"
+lua54 "yes"
 game "gta5"
 
-name "tam_chattoolbox"
+name "TAM_ChatToolBox"
 author "Hakko"
 description "Three Amigos Modding Chat Toolbox"
 version "1.0.0"
@@ -23,15 +23,14 @@ files {
 
 shared_scripts {
 	"@ox_lib/init.lua",
-    "shared/**"
+    "shared/main.lua"
 }
 
 server_scripts {
-    "server/**",
+    "server/main.lua",
 }
 
 dependencies {
 	"ox_lib",
-    "spawnmanager",
     "chat"
 }

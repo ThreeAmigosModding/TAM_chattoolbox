@@ -3,8 +3,10 @@
 ---- Do not edit if you do not know what you're doing ----
 --]]------------------------------------------------------
 
-if not lib.checkDependency("ox_lib", "3.16.2") then return Utils.print("ox_lib either outdated or missing. Please download the latest release else this resource will not work!\n https://github.com/overextended/ox_lib/releases/latest/", "error") end
+if not lib.checkDependency("ox_lib", "3.16.3") then return print("ox_lib either outdated or missing. Please download the latest release else this resource will not work!\n https://github.com/overextended/ox_lib/releases/latest/", "error") end
 
+local modes = require "data.modes"
+local config = require "data.config"
 local commands = require "data.commands"
 local callbacks = require "modules.callbacks.server"
 
@@ -27,10 +29,8 @@ for command, info in pairs(commands) do
     }, function(source, args, raw, info)
         cb(source, args, raw, command, info)
     end)
-    Utils.print("Loaded Chat Commands & Callbacks", "info")
+    lib.print.info("Loaded Chat Command: " .. command)
 end
-
-local modes = require "data.modes"
 
 ---@param modes table
 for mode, info in pairs(modes) do
@@ -39,54 +39,51 @@ for mode, info in pairs(modes) do
         name = mode,
         displayName = info.displayName,
         color = info.color,
-        seObject = ("mode.%s"):format(mode),
-        cb = function(source, message, cbs)
+        cb = info.cb or function(source, message, cbs)
+            local characterName = Bridge.getFullName(source)
             if info.prefix ~= false and info.prefix ~= nil then
                 cbs.updateMessage({
-                    template = info.prefix .. " {}"
+                    template = "<b>^".. info.color .. info.prefix .. "^7</b> {}" or "{}",
+                    args = {characterName, message.args[2]}
                 })
             end
-
+    
             if info.groups ~= nil and info.groups ~= false then
-                for _, group in pairs(Bridge.getGroups(info.groups)) do
-                    lib.addAce(group, ("mode.%s"):format(mode))
+                local allowedGroups = {}
+                local selfCoords = GetEntityCoords(GetPlayerPed(source))
+                local players = GetPlayers()
+    
+                for _, id in ipairs(players) do
+                    if group ~= false then
+                        table.insert(allowedGroups, id)
+                    end
                 end
-            else
-                lib.addAce("builtin.everyone", ("mode.%s"):format(mode))
+    
+                cbs.setRouting(allowedGroups)
             end
-            cbs.setSeObject(("mode.%s"):format(mode))
         end
     })
-    Utils.print("Loaded Chat Modes", "info")
+    lib.print.info("Loaded Chat Mode: " .. mode)
 end
 
-if Config.enableAntiSpam then
-    AddEventHandler("chatMessage", function(source, name, message)
-        if Utils.antiSpam(source, message) then CancelEvent() end
-    end)
-end
-
-if Config.enableFilter then
-    AddEventHandler("chatMessage", function(source, name, message)
-        for _, word in ipairs(config.blacklistedWords) do 
-            if string.find(string.lower(message, word)) then
-                CancelEvent()
-                Utils.notify("Blacklisted word!", "error")
-            end
-        end
-    end)
-end
-
-if Config.enableJoinNotifications then
+if config.enableJoinNotifications then
     AddEventHandler("playerJoining", function(source, oldId)
         local playerName = GetPlayerName(source)
-        TriggerClientEvent("chat:addMessage", -1, args = {(Config.joinMessage):format(playerName)})
+        TriggerClientEvent("chat:addMessage", -1, {args = {(config.joinMessage):format(playerName)}})
     end)
+    lib.print.info("Loaded Player Join Module")
 end
 
-if Config.enableLeaveNotifications then
+if config.enableLeaveNotifications then
     AddEventHandler("playerDropped", function(reason)
         local playerName = GetPlayerName(source)
-        TriggerClientEvent("chat:addMessage", -1, args = {(Config.leaveMessage):format(playerName, reason)})
+        TriggerClientEvent("chat:addMessage", -1, {args = {(config.leaveMessage):format(playerName, reason)}})
     end)
+    lib.print.info("Loaded Player Leave Module")
 end
+
+AddEventHandler('chatMessage', function(source, name, message)
+    if string.sub(message, 1, 1) == "/" then
+        CancelEvent()
+    end
+end)

@@ -10,7 +10,7 @@ local NDCore = exports["ND_Core"]
 ---@return boolean|table
 function bridge.getGroups(groups)
     if groups ~= nil and groups ~= false then
-        restricted = {}
+        local restricted = {}
         for _, group in pairs(groups) do
             table.insert(restricted, ("group.%s"):format(group))
         end

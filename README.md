@@ -1,10 +1,16 @@
-# Chat Toolbox by Three Amigos
+# Chat Toolbox by Three Amigos Modding
+
+### [Discord](https://discord.gg/threeamigos)
+
+### [Documentation](https://docs.threeamigos.shop)
+
+## QB & ESX are untested, use with caution.
 
 ## Installation
 
-Download the release of [ox_lib](https://github.com/overextended/ox_lib) from  & add it to your server or resources.cfg **BEFORE** `TAM_chattoolbox`
+Download the release of [ox_lib](https://github.com/overextended/ox_lib) & add it to your server or resources.cfg **BEFORE** `TAM_ChatToolbox`
 
-Add `ensure TAM_chattoolbox` to your server or resources cfg file
+Add `ensure TAM_ChatToolBox` to your server or resources cfg file
 
 ## Configuration
 
