@@ -34,3 +34,11 @@ dependencies {
 	"ox_lib",
     "chat"
 }
+
+escrow_ignore {
+    "data/**",
+    "modules/**",
+    "server/**",
+    "shared/**",
+    "client/**"
+}
