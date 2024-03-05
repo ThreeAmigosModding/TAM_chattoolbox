@@ -51,28 +51,6 @@ commands["do"] = { -- command name
     prefix = "^2[DO]^7: " -- prefix to ammend to the message
 }
 
-commands["ad"] = { -- command name
-    enabled = true, -- enable or disable the command
-    global = true, -- Set to false to only show to nearbly players
-    description = "Send an advertisement for your business!", -- command description
-    groups = false, -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
-    params = {
-        {
-            name = "business", -- parameter name
-            type = "string", -- parameter type 'number' or 'string' or 'playerId'
-            help = "What your business is called", -- parameter description
-            optional = false -- is the parameter optional or not
-        },
-        {
-            name = "args", -- parameter name
-            type = "string", -- parameter type 'number' or 'string' or 'playerId'
-            help = "What to say", -- parameter description
-            optional = false -- is the parameter optional or not
-        }
-    },
-    prefix = "^3[ADVERTISMENT]^7: " -- prefix to ammend to the message
-}
-
 commands["dw"] = { -- command name
     enabled = true, -- enable or disable the command
     global = true, -- Set to false to only show to nearbly players
