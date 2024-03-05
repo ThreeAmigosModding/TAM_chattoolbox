@@ -45,75 +45,98 @@ end
 callbacks["me"] = function(source, args, rawCommand, info)
     local username = GetPlayerName(source)
     local license = GetPlayerIdentifierByType(source, "license")
+    local message = rawCommand:gsub("me ", "")
 
     if not info.global then
+        local playerIds = {}
         local ped = GetPlayerPed(source)
         local coords = GetEntityCoords(ped)
-        local players = lib.getNearbyPlayers(coords, 10)
         local playerName = Bridge.getFullName(source)
-        for _, player in ipairs(players) do 
-            TriggerClientEvent("chat:addMessage", player, {color = {255, 0, 0}, args = {playerName .. ": " .. table.concat(args, ' ')}})
+        local players = lib.getNearbyPlayers(coords, 10, true)
+        
+        for _, player in ipairs(players) do
+            table.insert(playerIds, player.id)
+        end
+
+        for _, id in ipairs(playerIds) do 
+            TriggerClientEvent("chat:addMessage", id, {args = {info.prefix .. " " .. playerName .. ": " .. message}})
         end
     else
         local playerName = Bridge.getFullName(source)
-        TriggerClientEvent("chat:addMessage", -1, {args = {playerName .. ": " .. table.concat(args, ' ')}})
+        TriggerClientEvent("chat:addMessage", -1, {args = {info.prefix .. " " .. playerName .. ": " .. message}})
     end
 end
 
 callbacks["do"] = function(source, args, rawCommand, info)
     local username = GetPlayerName(source)
     local license = GetPlayerIdentifierByType(source, "license")
+    local message = rawCommand:gsub("do ", "")
 
     if not info.global then
+        local playerIds = {}
         local ped = GetPlayerPed(source)
         local coords = GetEntityCoords(ped)
-        local players = lib.getNearbyPlayers(coords, 10)
         local playerName = Bridge.getFullName(source)
+        local players = lib.getNearbyPlayers(coords, 10, true)
+        
         for _, player in ipairs(players) do
-            TriggerClientEvent("chat:addMessage", -1, {args = playerName .. " does " .. table.concat(args, ' ')})
+            table.insert(playerIds, player.id)
+        end
+
+        for _, id in ipairs(playerIds) do
+            TriggerClientEvent("chat:addMessage", id, {args = {info.prefix .. " " .. playerName .. " does " .. message}})
         end
     else
         local playerName = Bridge.getFullName(source)
-        TriggerClientEvent("chat:addMessage", -1, {args = playerName .. " does " .. table.concat(args, ' ')})
+        TriggerClientEvent("chat:addMessage", -1, {args = {info.prefix .. " " .. playerName .. " does " .. message}})
     end
 end
 
 callbacks["dw"] = function(source, args, rawCommand, info)
     local username = GetPlayerName(source)
     local license = GetPlayerIdentifierByType(source, "license")
+    local message = rawCommand:gsub("dw ", "")
 
     if not info.global then
+        local playerIds = {}
         local ped = GetPlayerPed(source)
         local coords = GetEntityCoords(ped)
-        local players = lib.getNearbyPlayers(coords, 10)
-        for _, player in ipairs(players) do 
-            TriggerClientEvent("chat:addMessage", player, {args = {info.prefix ..  " ANONYMOUS: " .. table.concat(args, ' ')}})
+        local playerName = Bridge.getFullName(source)
+        local players = lib.getNearbyPlayers(coords, 10, true)
+        
+        for _, player in ipairs(players) do
+            table.insert(playerIds, player.id)
+        end
+        
+        for _, id in ipairs(playerIds) do 
+            TriggerClientEvent("chat:addMessage", id, {args = {info.prefix ..  " " .. message}})
         end
     else
-        TriggerClientEvent("chat:addMessage", -1, {args = {info.prefix .. " ANONYMOUS: " .. table.concat(args, ' ')}})
+        TriggerClientEvent("chat:addMessage", -1, {args = {info.prefix .. " " .. message}})
     end
 end
 
 callbacks["clear"] = function(source, args, rawCommand, info)
     TriggerClientEvent("chat:clear", -1)
-    Wait(3000)
-    TriggerClientEvent("chat:addMessage", -1, "[^3SYSTEM^0] Chat Cleared by staff.")
+    Wait(1000)
+    TriggerClientEvent("chat:addMessage", -1, {args = {info.prefix .. " Chat Cleared by staff."}})
 end
 
 callbacks["announce"] = function(source, args, rawCommand, info)
-    TriggerClientEvent("chat:addMessage", -1, {args = {info.prefix .. table.concat(args, ' ')}})
+    local message = rawCommand:gsub("announce ", "")
+    TriggerClientEvent("chat:addMessage", -1, info.message)
 end
 
 callbacks["discord"] = function(source, args, rawCommand, info)
-    TriggerClientEvent("chat:addMessage", source, {args = {info.message}})
+    TriggerClientEvent("chat:addMessage", source, info.message)
 end
 
 callbacks["website"] = function(source, args, rawCommand, info)
-    TriggerClientEvent("chat:addMessage", source, {args = {info.message}})
+    TriggerClientEvent("chat:addMessage", source, info.message)
 end
 
 callbacks["store"] = function(source, args, rawCommand, info)
-    TriggerClientEvent("chat:addMessage", source, {args = {info.message}})
+    TriggerClientEvent("chat:addMessage", source, info.message)
 end
 
 callbacks["players"] = function(source, args, rawCommand, info)

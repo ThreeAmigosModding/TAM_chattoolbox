@@ -26,7 +26,7 @@ for command, info in pairs(commands) do
         help = info.description,
         params = info.params,
         restricted = Bridge.getGroups(info.groups)
-    }, function(source, args, raw, info)
+    }, function(source, args, raw)
         cb(source, args, raw, command, info)
     end)
     lib.print.info("Loaded Chat Command: " .. command)

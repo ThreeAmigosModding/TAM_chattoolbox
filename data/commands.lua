@@ -32,7 +32,7 @@ commands["me"] = { -- command name
             optional = false -- is the parameter optional or not
         }
     },
-    prefix = "[ME]: " -- prefix to ammend to the message
+    prefix = "^1[ME]^7: " -- prefix to ammend to the message
 }
 
 commands["do"] = { -- command name
@@ -48,23 +48,7 @@ commands["do"] = { -- command name
             optional = false -- is the parameter optional or not
         }
     },
-    prefix = "[DO]: " -- prefix to ammend to the message
-}
-
-commands["ooc"] = { -- command name
-    enabled = true, -- enable or disable the command
-    global = true, -- Set to false to only show to nearbly players
-    description = "Send a message out of character", -- command description
-    groups = false, -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
-    params = {
-        {
-            name = "args", -- parameter name
-            type = "string", -- parameter type 'number' or 'string' or 'playerId'
-            help = "What to say", -- parameter description
-            optional = false -- is the parameter optional or not
-        }
-    },
-    prefix = "[OOC]: " -- prefix to ammend to the message
+    prefix = "^2[DO]^7: " -- prefix to ammend to the message
 }
 
 commands["ad"] = { -- command name
@@ -86,23 +70,7 @@ commands["ad"] = { -- command name
             optional = false -- is the parameter optional or not
         }
     },
-    prefix = "[ADVERTISMENT]: " -- prefix to ammend to the message
-}
-
-commands["twt"] = { -- command name
-    enabled = true, -- enable or disable the command
-    global = true, -- Set to false to only show to nearbly players
-    description = "Send a bleeter message.", -- command description
-    groups = false, -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
-    params = {
-        {
-            name = "args", -- parameter name
-            type = "string", -- parameter type 'number' or 'string' or 'playerId'
-            help = "What to say", -- parameter description
-            optional = false -- is the parameter optional or not
-        }
-    },
-    prefix = "[BLEETER]: " -- prefix to ammend to the message
+    prefix = "^3[ADVERTISMENT]^7: " -- prefix to ammend to the message
 }
 
 commands["dw"] = { -- command name
@@ -118,14 +86,15 @@ commands["dw"] = { -- command name
             optional = false -- is the parameter optional or not
         }
     },
-    prefix = "[DARK WEB]: " -- prefix to ammend to the message
+    prefix = "^3[DARK WEB]^7: " -- prefix to ammend to the message
 }
 
 commands["clear"] = { -- command name
     enabled = true, -- enable or disable the command
     description = "Clears the chat.", -- command description
     groups = {"admin"}, -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
-    params = {}
+    params = {},
+    prefix = "^5[SYSTEM]^7: "
 }
 
 commands["announce"] = { -- command name
@@ -141,7 +110,7 @@ commands["announce"] = { -- command name
             optional = false -- is the parameter optional or not
         }
     },
-    prefix = "[ANNOUNCEMENT]: " -- prefix to ammend to the message
+    prefix = "^5[ANNOUNCEMENT]^7: " -- prefix to ammend to the message
 }
 
 commands["discord"] = { -- command name
@@ -155,7 +124,7 @@ commands["website"] = { -- command name
     enabled = true, -- enable or disable the command
     description = "Check out our Discord!", -- command description
     groups = false, -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
-    message = "https://threeamigos.shop" -- what to send back to the player that runs it. 
+    message = "View our website - https://threeamigos.shop" -- what to send back to the player that runs it. 
 }
 
 commands["store"] = { -- command name
@@ -169,7 +138,7 @@ commands["players"] = { -- command name
     enabled = true, -- enable or disable the command
     description = "Get the number of current players!", -- command description
     groups = false, -- Group(s) that have the permission to use the command, set to false to allow everyone. Ace permission by default, but if using ND Core you can specify the group name.
-    prefix = "[SYSTEM]: " -- prefix to ammend to the message
+    prefix = "^5[SYSTEM]^7: " -- prefix to ammend to the message
 }
 
 return commands
