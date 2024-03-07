@@ -20,7 +20,7 @@ end
 
 ---@param commands table
 for command, info in pairs(commands) do
-    if not info.enabled then return end
+    if not info.enabled then end
     local cb = info.cb or callback
     lib.addCommand(command, {
         help = info.description,
@@ -34,7 +34,7 @@ end
 
 ---@param modes table
 for mode, info in pairs(modes) do
-    if not info.enabled then return end
+    if not info.enabled then end
     exports.chat:registerMode({
         name = mode,
         displayName = info.displayName,

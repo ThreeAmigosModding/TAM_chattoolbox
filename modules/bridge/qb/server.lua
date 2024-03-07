@@ -31,7 +31,7 @@ end
 ---@param source integer
 ---@return string
 function bridge.getFullName(source)
-    local PlayerData = QBCore.Functions.GetPlayerData()
+    local PlayerData = QBCore.Functions.GetPlayer()
     return PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname
 end
 
